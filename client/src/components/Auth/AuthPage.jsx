@@ -3,7 +3,7 @@ import assets from '../../assets/assets';
 import { loginUser, registerUser } from '../../logic';
 
 export default function AuthPage({ onLoginSuccess }) {
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [fullName, setFullName] = useState('');
   const [description, setDescription] = useState('');
   const [email, setEmail] = useState('');
@@ -26,7 +26,7 @@ export default function AuthPage({ onLoginSuccess }) {
       setError('Please enter your full name.');
       return;
     }
-    if (!agreed) {
+    if (isSignUp && !agreed) {
       setError('Please agree to the terms of use & privacy policy.');
       return;
     }
@@ -159,19 +159,21 @@ export default function AuthPage({ onLoginSuccess }) {
                 )}
               </button>
 
-              {/* Terms Checkbox */}
-              <div className="flex items-center gap-2.5 mt-2">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-600 bg-purple-950/40 text-purple-600 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-[#936EFF]"
-                />
-                <label htmlFor="terms" className="text-xs text-gray-300 cursor-pointer select-none">
-                  Agree to the terms of use & privacy policy.
-                </label>
-              </div>
+              {/* Terms Checkbox - Sign Up only */}
+              {isSignUp && (
+                <div className="flex items-center gap-2.5 mt-2">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                    className="w-4 h-4 rounded border-gray-600 bg-purple-950/40 text-purple-600 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-[#936EFF]"
+                  />
+                  <label htmlFor="terms" className="text-xs text-gray-300 cursor-pointer select-none">
+                    Agree to the terms of use & privacy policy.
+                  </label>
+                </div>
+              )}
 
               {/* Mode Toggle Footer */}
               <div className="mt-4 text-center text-xs text-gray-300">
